@@ -1,0 +1,69 @@
+window.onload = () => {
+    const f = document.querySelector("#f");
+    let i = document.getElementById("i");
+    let s = document.getElementById("s");
+    let e = null;
+
+    f.addEventListener("submit", a);
+    i.addEventListener("click", r);
+};
+
+function a(event) {
+    event.preventDefault();
+
+    if (s.value != "Submit") {
+        e.target.parentNode.childNodes[0].data = document.getElementById("i").value;
+        s.value = "Submit";
+        document.getElementById("i").value = "";
+        showMessage("Text edited successfully");
+        return false;
+    }
+
+    let n = document.getElementById("i").value.trim();
+    if (n === "") return false;
+
+    let l = document.createElement("li");
+    l.className = "list-group-item";
+
+    let d = createButton("Delete", "btn-danger delete");
+    let editButton = createButton("Edit", "btn-success edit");
+
+    l.appendChild(document.createTextNode(n));
+    l.appendChild(d);
+    l.appendChild(editButton);
+    items.appendChild(l);
+
+    document.getElementById("i").value = "";
+}
+
+function r(event) {
+    event.preventDefault();
+    if (event.target.classList.contains("delete")) {
+        if (confirm("Are you Sure?")) {
+            let l = event.target.parentNode;
+            items.removeChild(l);
+            showMessage("Text deleted successfully");
+        }
+    }
+    if (event.target.classList.contains("edit")) {
+        document.getElementById("i").value = event.target.parentNode.childNodes[0].data;
+        s.value = "EDIT";
+        e = event;
+    }
+}
+
+function createButton(text, className) {
+    let b = document.createElement("button");
+    b.className = "btn btn-sm float-right " + className;
+    b.appendChild(document.createTextNode(text));
+    return b;
+}
+
+function showMessage(message) {
+    let m = document.getElementById("m");
+    m.innerHTML = message;
+    m.style.display = "block";
+    setTimeout(function () {
+        m.style.display = "none";
+    }, 3000);
+}
